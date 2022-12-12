@@ -6,7 +6,7 @@ var { rooms } = require('../models/RoomData');
 
 const { Server } = require('ws');
 // Socket server
-const sockserver = new Server({ port: 443 });
+const sockserver = new Server({ port: 9000 });
 const clients = new Map();
 const games = new Array();
 var players = { "room1": 0, "room2": 0, "room3": 0 };

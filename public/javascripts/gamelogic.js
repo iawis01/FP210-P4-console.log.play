@@ -9,7 +9,7 @@ if (user.room1 == true) { room = "room1" };
 if (user.room2 == true) { room = "room2" };
 if (user.room3 == true) { room = "room3" };
 
-const webSocket = new WebSocket('ws://localhost:443/ws/?room=' + room + '&username=' + user.username);
+const webSocket = new WebSocket('ws://localhost:9000/ws/?room=' + room + '&username=' + user.username);
 let el;
 function fade(element) {
     var op = 1;  // initial opacity
