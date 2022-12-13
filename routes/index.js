@@ -7,6 +7,13 @@ var {register, validatedRegister} = require("../controllers/registerController")
 var { gameApp, ocupation, ocupationcheck, disconnect } = require("../controllers/gameAppController");
 
 
+//API REST
+//router.get
+/*router.get('/api/users', (req, res) =>{
+  res.send("create user");
+
+});*/
+
 /* GET home page. */
 router.get('/', init);
 router.get('/game', renderGame);
@@ -15,8 +22,10 @@ router.get('/logOut', logOut);
 router.get('/register', register);
 router.post('/validated-register', validatedRegister);
 router.get('/game-app', gameApp);
-router.get('/ocupationcheck', ocupationcheck)
-router.get('/disconnect', disconnect)
-router.get('/ocupation', ocupation)
+router.get('/ocupationcheck', ocupationcheck);
+router.get('/disconnect', disconnect);
+router.get('/ocupation', ocupation);
+
+
 
 module.exports = router;

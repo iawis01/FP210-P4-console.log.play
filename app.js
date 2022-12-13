@@ -8,6 +8,12 @@ var gameAppRouter = require('./routes/game-app');
 const { randomUUID } = require('crypto');
 const { join } = require('path');
 var app = express();
+var mongoConexion = require('./mongoDbConexion');
+const routerUser = require('./routes/user')
+const mongoose = require("mongoose");
+
+require("dotenv").config();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,6 +29,23 @@ app.use('/bootstrap/js', express.static(__dirname + '/node_modules/bootstrap/dis
 app.use('/favicons', express.static(__dirname + '/node_modules/express-favicon/index.js'));
 
 app.use(indexRouter);
+
+app.use('/api', routerUser);
+
+//mongoDB
+//username: user
+//password: user1234
+
+//Mongodb
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.log(error));
+
+
+
+
 
 
 // catch 404 and forward to error handler
