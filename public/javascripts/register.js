@@ -71,8 +71,8 @@
             var username = document.getElementById('email').value;
             var password = document.getElementById('password').value;
             var name = document.getElementById('name').value;
-
-            fetch('/validated-register', {
+            //API REST POST /api/users
+            fetch('/api/users', {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify({

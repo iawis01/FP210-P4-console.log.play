@@ -8,9 +8,9 @@ var gameAppRouter = require('./routes/game-app');
 const { randomUUID } = require('crypto');
 const { join } = require('path');
 var app = express();
-var mongoConexion = require('./mongoDbConexion');
 const routerUser = require('./routes/user')
 const mongoose = require("mongoose");
+const routerRoom = require('./routes/room');
 
 require("dotenv").config();
 
@@ -29,8 +29,8 @@ app.use('/bootstrap/js', express.static(__dirname + '/node_modules/bootstrap/dis
 app.use('/favicons', express.static(__dirname + '/node_modules/express-favicon/index.js'));
 
 app.use(indexRouter);
-
 app.use('/api', routerUser);
+app.use('/api', routerRoom);
 
 //mongoDB
 //username: user

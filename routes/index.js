@@ -20,7 +20,7 @@ router.get('/game', renderGame);
 router.post('/login', login);
 router.get('/logOut', logOut);
 router.get('/register', register);
-router.post('/validated-register', validatedRegister);
+//router.post('/validated-register', validatedRegister);
 router.get('/game-app', gameApp);
 router.get('/ocupationcheck', ocupationcheck);
 router.get('/disconnect', disconnect);

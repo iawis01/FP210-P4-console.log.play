@@ -6,12 +6,12 @@ function register(request,response){
   response.end();
 }
 
-function validatedRegister(request,response){
+/*function validatedRegister(request,response){
   
   const newUser = new Player(request.body.name, request.body.username, request.body.password);
   users.push(newUser);
   response.end()
-}
+}*/
 
 exports.register = register;
-exports.validatedRegister = validatedRegister;
+//exports.validatedRegister = validatedRegister;

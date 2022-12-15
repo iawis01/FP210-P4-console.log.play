@@ -22,11 +22,21 @@ routerUser.get('/users', (req, res) =>{
   )
 });
 
-//Get an user
-routerUser.get('/users/:id', (req, res) =>{
+//Get an user by ID
+routerUser.get('/user/:id', (req, res) =>{
   const {id } = req.params;
   userSchema
   .findById(id)
+  .then((data) => res.json(data))
+  .catch((error) => res.json({message: error})
+  )
+});
+
+//Get an user by email
+routerUser.get('/users/:username', (req, res) =>{
+  const {username} = req.params;
+  userSchema
+  .findOne({username})
   .then((data) => res.json(data))
   .catch((error) => res.json({message: error})
   )
@@ -52,5 +62,16 @@ routerUser.delete('/users/:id', (req, res) =>{
   .catch((error) => res.json({message: error})
   )
 });
+
+routerUser.get('/login', (req, res) =>{
+  const {username} = req.params;
+  userSchema
+  .findOne({username})
+  .then((data) => res.json(data))
+  .catch((error) => res.json({message: error})
+  )
+});
+
+
 
 module.exports = routerUser;
