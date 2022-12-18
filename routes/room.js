@@ -2,16 +2,22 @@ const express = require("express");
 const routerRoom = express.Router();
 const roomSchema = require('../models/roomSchema');
 
-
-//La ruta buena sería /validated-register
-//Creat an user
+//Creat a room
 routerRoom.post('/rooms', (req, res) =>{
-  const user = roomSchema(req.body);
-  user.save()
+  const room = roomSchema(req.body);
+  room.save()
   .then((data) => res.json(data))
   .catch((error) => res.json({message: error})
   )
 });
+
+async function getRooms(){
+  await roomSchema
+  .find()
+  .then()
+  .catch((error) => console.log(error)
+  )
+}
 
 //Get all rooms
 routerRoom.get('/rooms', (req, res) =>{
@@ -22,7 +28,7 @@ routerRoom.get('/rooms', (req, res) =>{
   )
 });
 
-//Get an room
+//Get a room
 routerRoom.get('/rooms/:id', (req, res) =>{
   const {id } = req.params;
   roomSchema
@@ -32,18 +38,18 @@ routerRoom.get('/rooms/:id', (req, res) =>{
   )
 });
 
-//Edit an room
+//Edit a room
 routerRoom.put('/rooms/:id', (req, res) =>{
   const {id } = req.params;
-  const {name, username, password} = req.body;
+  const {name, roomname, password} = req.body;
   roomSchema
-  .updateOne({_id: id}, {$set:{name, username, password}})
+  .updateOne({_id: id}, {$set:{name, roomname, password}})
   .then((data) => res.json(data))
   .catch((error) => res.json({message: error})
   )
 });
 
-//Get an room
+//Delete a room
 routerRoom.delete('/rooms/:id', (req, res) =>{
   const {id } = req.params;
   roomSchema
@@ -54,3 +60,4 @@ routerRoom.delete('/rooms/:id', (req, res) =>{
 });
 
 module.exports = routerRoom;
+module.exports = getRooms;

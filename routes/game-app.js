@@ -2,10 +2,15 @@ var express = require('express');
 const url = require('url');
 const Game = require("../models/Game");
 var router = express.Router();
-var { rooms } = require('../models/RoomData');
-
+//var { rooms } = require('../models/RoomData');
+const getRooms = require("../routes/room");
 const { Server } = require('ws');
+
+let rooms;
+rooms = getRooms();
+console.log(rooms);
 // Socket server
+
 const sockserver = new Server({ port: 9000 });
 const clients = new Map();
 const games = new Array();
@@ -101,13 +106,14 @@ function joine(ws, req) {
     console.log("Error");
   }
 }
-
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
+
+
 
 setInterval(() => {
   sockserver.clients.forEach((client) => {
