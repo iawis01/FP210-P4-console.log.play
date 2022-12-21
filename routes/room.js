@@ -11,13 +11,6 @@ routerRoom.post('/rooms', (req, res) =>{
   )
 });
 
-async function getRooms(){
-  await roomSchema
-  .find()
-  .then()
-  .catch((error) => console.log(error)
-  )
-}
 
 //Get all rooms
 routerRoom.get('/rooms', (req, res) =>{
@@ -29,7 +22,7 @@ routerRoom.get('/rooms', (req, res) =>{
 });
 
 //Get a room
-routerRoom.get('/rooms/:id', (req, res) =>{
+routerRoom.get('/room/:id', (req, res) =>{
   const {id } = req.params;
   roomSchema
   .findById(id)
@@ -38,12 +31,33 @@ routerRoom.get('/rooms/:id', (req, res) =>{
   )
 });
 
-//Edit a room
-routerRoom.put('/rooms/:id', (req, res) =>{
-  const {id } = req.params;
-  const {name, roomname, password} = req.body;
+//Get a room
+routerRoom.get('/rooms/:number', (req, res) =>{
+  const { number } = req.params;
   roomSchema
-  .updateOne({_id: id}, {$set:{name, roomname, password}})
+  .findOne({number})
+  .then((data) => res.json(data))
+  .catch((error) => res.json({message: error})
+  )
+});
+
+//Edit a room by id
+routerRoom.put('/room/:id', (req, res) =>{
+  const {id } = req.params;
+  const {number, name, player1, player2} = req.body;
+  roomSchema
+  .updateOne({_id: id}, {$set:{number, name, player1, player2}})
+  .then((data) => res.json(data))
+  .catch((error) => res.json({message: error})
+  )
+});
+
+//Edit a room by number
+routerRoom.put('/rooms/:number', (req, res) =>{
+  const {number } = req.params;
+  const {name, player1, player2} = req.body;
+  roomSchema
+  .updateOne({number: number}, {$set:{number, name, player1, player2}})
   .then((data) => res.json(data))
   .catch((error) => res.json({message: error})
   )
@@ -60,4 +74,3 @@ routerRoom.delete('/rooms/:id', (req, res) =>{
 });
 
 module.exports = routerRoom;
-module.exports = getRooms;

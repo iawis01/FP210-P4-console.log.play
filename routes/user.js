@@ -46,6 +46,7 @@ routerUser.get('/users/:username', (req, res) =>{
 routerUser.put('/users/:id', (req, res) =>{
   const {id } = req.params;
   const {name, username, password} = req.body;
+
   userSchema
   .updateOne({_id: id}, {$set:{name, username, password}})
   .then((data) => res.json(data))

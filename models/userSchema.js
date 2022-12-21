@@ -10,6 +10,9 @@ const userSchema = mongoose.model('User', new Schema({
   },
   password: {type: String,
     required: true
+  },
+  avatar: {type: String,
+    required: true
   }
 }))
 

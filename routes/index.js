@@ -25,6 +25,7 @@ router.get('/game-app', gameApp);
 router.get('/ocupationcheck', ocupationcheck);
 router.get('/disconnect', disconnect);
 router.get('/ocupation', ocupation);
+router.put('/ocupation', ocupation);
 
 
 

@@ -78,11 +78,12 @@
                 body: JSON.stringify({
                     name: name,
                     username: username,
-                    password: password
+                    password: password,
+                    avatar: avatarChoose.src.replace('http://localhost:8888', '')
                 })
             }).then(response => {
                 if (response.ok) {
-                    var newObject = {
+                /*var newObject = {
                         'name': name,
                         'username': username,
                         'avatar': avatarChoose.src.replace('http://localhost:8888', ''),
@@ -91,7 +92,7 @@
                         'room2': false,
                         'room3': false
                     }
-                    localStorage.setItem('User', JSON.stringify(newObject))
+                    localStorage.setItem('User', JSON.stringify(newObject))*/
                     window.location.assign("/")
                 } else {
                     document.getElementById('helper').style.visibility = "visible"

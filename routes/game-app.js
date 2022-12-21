@@ -3,13 +3,11 @@ const url = require('url');
 const Game = require("../models/Game");
 var router = express.Router();
 //var { rooms } = require('../models/RoomData');
-const getRooms = require("../routes/room");
+const roomSchema = require('../models/roomSchema');
 const { Server } = require('ws');
 
-let rooms;
-rooms = getRooms();
-console.log(rooms);
-// Socket server
+
+
 
 const sockserver = new Server({ port: 9000 });
 const clients = new Map();
@@ -17,7 +15,8 @@ const games = new Array();
 var players = { "room1": 0, "room2": 0, "room3": 0 };
 var colors = { "room1": "", "room2": "", "room3": "" };
 
-sockserver.on('connection', (ws, req) => {
+sockserver.on('connection', async (ws, req) => {
+  let rooms = await roomSchema.find();
   joine(ws, req);
 
   ws.on('message', (messageAsString) => {
@@ -51,6 +50,7 @@ sockserver.on('connection', (ws, req) => {
         client.send(data);
       }
     })
+  
     const roomToDelete = rooms.find(room => room.number === ws.room);
     roomToDelete.setPlayer2("");
     roomToDelete.setPlayer1("");
@@ -61,7 +61,8 @@ sockserver.on('connection', (ws, req) => {
 
 });
 
-function joine(ws, req) {
+ function joine(ws, req) {
+ 
   let parameters = url.parse(req.url, true).query;
   const room = parameters.room;
   if (players[room] === 1) {

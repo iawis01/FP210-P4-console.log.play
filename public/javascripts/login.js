@@ -1,4 +1,3 @@
-
 var boton = document.querySelector("#login");
 
 boton.addEventListener('click', function () {
@@ -14,6 +13,18 @@ boton.addEventListener('click', function () {
         })
     }).then(response => {
         if (response.ok) {
+            var newObject = {
+                'name': "",
+                'username': username,
+                'avatar': "",
+                'isLogged': false,
+                'room1': false,
+                'room2': false,
+                'room3': false
+            }
+            window.localStorage.setItem('User', JSON.stringify(newObject))
+
+
             var user =JSON.parse(localStorage.getItem("User"));
             user.isLogged= true;
             localStorage.setItem('User', JSON.stringify(user))

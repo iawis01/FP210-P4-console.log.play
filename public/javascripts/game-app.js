@@ -8,10 +8,11 @@ $('#myModal').on('click', 'button.close', function (eventObject) {
 
 //DATA LOCALSTORAGE
 var user = JSON.parse(localStorage.getItem('User'));
-var name = user.name;
 var avatar = document.getElementById("avatarChoose");
 var userName = document.getElementById("user-name");
-userName.innerHTML = "Hi" + ' ' + user.name.toLowerCase();
+
+//Aqui hay que traer la info
+userName.innerHTML = "Hi" + ' ' + user.username.toLowerCase();
 avatar.src = user.avatar;
 
 //LOG OUT
@@ -56,6 +57,7 @@ function entrar(id) {
 * @param  {Event} ev event that trigger the function
 */
 function drop(ev) {
+    
     var data = ev.dataTransfer.getData("text");
     if (ev.target.id != "user-name") {
         fetch('/ocupation?room=' + ev.target.id + '&user=' + user.username).then(response => {
@@ -74,6 +76,18 @@ function drop(ev) {
                 document.getElementById(ev.target.id).innerHTML = document.getElementById(ev.target.id).innerHTML + '<input class="btn btn-primary" type="button" value="Get out" onClick=getOutRoom("' + ev.target.id + '","' + user.username + '") />';
                 document.getElementById(ev.target.id + "f").innerHTML = '<a href="javascript:entrar(\'' + ev.target.id + '\')">Entrar</a>';
                 document.getElementById("avatarChoose").setAttribute('draggable', false);
+
+                fetch('/api/rooms/' + onRoom , {
+                    method: 'PUT',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({
+                        number: "onRoom",
+                        player1: user.username,
+                        player2: ""
+                    })
+                }).then((data) => console.log(data));
+
+                console.log(ev.target.id)
             }
             /**
             * user is alrealdy in other room
@@ -102,6 +116,8 @@ function drop(ev) {
 */
 function getOutRoom(room, userName) {
     fetch('/disconnect?room=' + room + '&user=' + userName).then(response => {
+        console.log(room);
+        console.log(userName);
         if (response.ok) {
             document.getElementById("alert-text").innerHTML = 'Correctly disconnected';
             $("#myModal").modal("show");
@@ -111,6 +127,17 @@ function getOutRoom(room, userName) {
             document.getElementById(room + "f").innerHTML = '<i id="' + room + 'f"></i>';
             document.getElementById(room).style.backgroundColor = 'rgb(58, 140, 255)';
             document.getElementById("avatarChoose").setAttribute('draggable', true);
+
+            fetch('/api/rooms/' + room , {
+                method: 'PUT',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({
+                    number: "onRoom",
+                    player1: "",
+                    player2: "",
+                })
+            }).then((data) => console.log(data));
+
         }
         else {
             document.getElementById("alert-text").innerHTML = 'Error leaving the room';
